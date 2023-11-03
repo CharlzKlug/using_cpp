@@ -7,7 +7,7 @@ const std::vector<std::string>
 stringNumbers{"zero", "one", "two", "three", "four",
     "five", "six", "seven", "eight", "nine"};
 
-void numberToString (std::string inputValue) {
+void numberToString (std::string const inputValue) {
     size_t i;
     if(sscanf(inputValue.c_str(), "%ld", &i) == 1) {
 	// Если введённое значение --- численное
