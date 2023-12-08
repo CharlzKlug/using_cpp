@@ -1,5 +1,6 @@
 #include <iostream> // For std::cerr
 #include <vector> // For std::vector
+#include <cassert> // For assert
 
 class Exception {
 private:
@@ -125,7 +126,13 @@ int main() {
 	// if (j<i) std::cout << "Success!\n";
 
 	// 24
-	
+	// int x = 2;
+	// assert(x != 2);
+	// double d = 5 / (x-2);
+	// if (d==2*x+0.5) std::cout << "Success!\n";
+
+	// 25
+	// std::cout << "Success!\n";
 	return 0;
     } catch (Exception& e) {
 	std::cerr << "Ошибка: " << e.what() << std::endl;
