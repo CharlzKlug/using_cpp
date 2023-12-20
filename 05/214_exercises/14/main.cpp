@@ -1,6 +1,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <cstring> // For tolower()
+#include <algorithm> // For std::transform
 
 void addStringToVectorDestructive(std::string & inputString,
 				  std::vector<std::string> & outputVector) {
@@ -30,8 +32,34 @@ void printVectorString(std::vector<std::string> const inputVector) {
     }
 }
 
+std::vector<std::string> allowedDays
+{"sunday", "sun",
+ "monday", "mon",
+ "tuesday", "tue"
+ "wednesday", "wed"
+ "thursday", "thu"
+ "friday", "fri"
+ "saturday", "sat"};
+
+bool isDay(std::string const inputWord) {
+    std::string tmp= inputWord;
+    std::transform(tmp.begin(), tmp.end(), tmp.begin(),
+		   [](unsigned char c){return std::tolower(c);});
+    for (std::string str : allowedDays) {
+	if (str == tmp) {return true;}
+    }
+    return false;
+}
+
 int main() {
-    std::vector<std::string> tmp= words("      1    \t    2 3");
-    printVectorString(tmp);
+    // std::vector<std::string> tmp= words("      -1.89    \t    2 3");
+    // printVectorString(tmp);
+    bool inputFinished= false;
+    bool readDayOfWeek= true;
+    while (!inputFinished) {
+	std::string inputString;
+	std::cin >> inputString;
+	
+    }
     return 0;
 }
