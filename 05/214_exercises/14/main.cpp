@@ -26,9 +26,10 @@ std::vector<std::string> words(std::string const inputString) {
     return result;
 }
 
-void printVectorString(std::vector<std::string> const inputVector) {
-    for (std::string str : inputVector) {
-	std::cout << str << '\n';
+template<typename T>
+void printVector(std::vector<T> const inputVector) {
+    for (T str : inputVector) {
+	std::cout << str << ' ';
     }
 }
 
@@ -51,15 +52,80 @@ bool isDay(std::string const inputWord) {
     return false;
 }
 
+int dayNumber(std::string const inputWord) {
+    std::string tmp= inputWord;
+    std::transform(tmp.begin(), tmp.end(), tmp.begin(),
+		   [](unsigned char c){return std::tolower(c);});
+    for (size_t i=0; i < allowedDays.size() / 2; ++i) {
+	if (allowedDays.at(i*2) == tmp || allowedDays.at(i*2 + 1) == tmp) {
+	    return i;
+	}
+    }
+    return -1;
+}
+
+std::vector<std::string> const daysOfWeek {
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+};
+
 int main() {
     // std::vector<std::string> tmp= words("      -1.89    \t    2 3");
     // printVectorString(tmp);
-    bool inputFinished= false;
+    // bool inputFinished= false;
     bool readDayOfWeek= true;
-    while (!inputFinished) {
+    // std::vector<int> sundayVector{};
+    // std::vector<int> mondayVector{};
+    // std::vector<int> tuesdayVector{};
+    // std::vector<int> wednesdayVector{};
+    // std::vector<int> thursdayVector{};
+    // std::vector<int> fridayVector{};
+    // std::vector<int> saturdayVector{};
+    std::vector<std::vector<int>> weekVector;
+    for (int i= 0; i < 7; ++i) {
+	weekVector.push_back(std::vector<int> {});
+    }
+    int currentDay;
+    bool exitP=false;
+    while (!exitP) {
 	std::string inputString;
 	std::cin >> inputString;
-	
+	auto currentWords= words(inputString);
+	for (auto word : currentWords) {
+	    if ("exit" == word) {
+		exitP= true;
+		break;
+	    }
+	    if (readDayOfWeek && isDay(word)) {
+		currentDay= dayNumber(word);
+		readDayOfWeek= false;
+	    } else {
+		std::size_t pos{};
+		try {
+		    int val= std::stoi(word, &pos);
+		    std::cout << "val: " << val << std::endl;
+		    std::cout << "currentDay: " << currentDay << std::endl;
+		    (weekVector[currentDay]).push_back(val);
+		} catch (...) {
+		    readDayOfWeek= true;
+		}
+	    }
+	}
     }
+
+    // std::cout << "Monday:\n";
+    // printVector <int> (weekVector.at(1));
+
+    for (size_t i= 0; i < daysOfWeek.size(); ++i) {
+	std::cout << daysOfWeek.at(i) << ": ";
+	printVector(weekVector.at(i));
+	std::cout << std::endl;
+    }
+    
     return 0;
 }
