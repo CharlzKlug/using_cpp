@@ -36,10 +36,10 @@ void printVector(std::vector<T> const inputVector) {
 std::vector<std::string> allowedDays
 {"sunday", "sun",
  "monday", "mon",
- "tuesday", "tue"
- "wednesday", "wed"
- "thursday", "thu"
- "friday", "fri"
+ "tuesday", "tue",
+ "wednesday", "wed",
+ "thursday", "thu",
+ "friday", "fri",
  "saturday", "sat"};
 
 bool isDay(std::string const inputWord) {
@@ -74,24 +74,23 @@ std::vector<std::string> const daysOfWeek {
     "Saturday"
 };
 
+int intVectorSum (std::vector<int> const inputVector) {
+    int sum= 0;
+    for (int t : inputVector) {
+	sum += t;
+    }
+    return sum;
+}
+
 int main() {
-    // std::vector<std::string> tmp= words("      -1.89    \t    2 3");
-    // printVectorString(tmp);
-    // bool inputFinished= false;
     bool readDayOfWeek= true;
-    // std::vector<int> sundayVector{};
-    // std::vector<int> mondayVector{};
-    // std::vector<int> tuesdayVector{};
-    // std::vector<int> wednesdayVector{};
-    // std::vector<int> thursdayVector{};
-    // std::vector<int> fridayVector{};
-    // std::vector<int> saturdayVector{};
     std::vector<std::vector<int>> weekVector;
     for (int i= 0; i < 7; ++i) {
 	weekVector.push_back(std::vector<int> {});
     }
     int currentDay;
     bool exitP=false;
+    int ignoredDaysCount= 0;
     while (!exitP) {
 	std::string inputString;
 	std::cin >> inputString;
@@ -101,31 +100,32 @@ int main() {
 		exitP= true;
 		break;
 	    }
-	    if (readDayOfWeek && isDay(word)) {
-		currentDay= dayNumber(word);
-		readDayOfWeek= false;
-	    } else {
+	    if (readDayOfWeek) {
+		if (isDay(word)) {
+		    currentDay= dayNumber(word);
+		    readDayOfWeek= false;
+		} else {
+		    ignoredDaysCount++;
+		}
+	    } else if (!readDayOfWeek) {
 		std::size_t pos{};
 		try {
 		    int val= std::stoi(word, &pos);
-		    std::cout << "val: " << val << std::endl;
-		    std::cout << "currentDay: " << currentDay << std::endl;
 		    (weekVector[currentDay]).push_back(val);
 		} catch (...) {
 		    readDayOfWeek= true;
 		}
+		readDayOfWeek= true;
 	    }
 	}
     }
 
-    // std::cout << "Monday:\n";
-    // printVector <int> (weekVector.at(1));
-
     for (size_t i= 0; i < daysOfWeek.size(); ++i) {
 	std::cout << daysOfWeek.at(i) << ": ";
 	printVector(weekVector.at(i));
-	std::cout << std::endl;
+	std::cout << "sum: " << intVectorSum(weekVector.at(i)) << std::endl;
     }
-    
+
+    std::cout << "Ignored days count: " << ignoredDaysCount << std::endl;
     return 0;
 }
