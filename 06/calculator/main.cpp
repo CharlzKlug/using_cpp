@@ -10,7 +10,27 @@ void error(std::string message) {
     exit(1);
 }
 
+class Token {
+public:
+    char kind;
+    double value;
+};
+
 int main() {
+    // Token t;
+    // t.kind= '+';
+    // Token t2;
+    // t2.kind= '8';
+    // t2.value= 3.14;
+
+    // Token tt= t;
+    // if (tt.kind != t.kind) error("невозможно!");
+    // t= t2;
+    // std::cout << t.value << std::endl;
+
+    Token t1{'+',0};
+    Token t2{'8', 11.5};
+    
     std::cout << "Введите выражение (разрешены +, -, * и /)\n";
     std::cout << "Добавьте x к концу выражения (1+2*3x): ";
     int lval= 0;
