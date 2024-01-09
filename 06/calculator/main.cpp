@@ -16,6 +16,9 @@ public:
     double value;
 };
 
+Token get_token(); // Функция чтения лексемы из потока cin
+vector<Token> tok; // Сюда помещаем лексемы
+
 int main() {
     // Token t;
     // t.kind= '+';
@@ -28,6 +31,11 @@ int main() {
     // t= t2;
     // std::cout << t.value << std::endl;
 
+    while (cin) {
+	Token t= get_token();
+	tok.push_back(4);
+    }
+    
     Token t1{'+',0};
     Token t2{'8', 11.5};
     
