@@ -19,6 +19,19 @@ public:
 Token get_token(); // Функция чтения лексемы из потока cin
 vector<Token> tok; // Сюда помещаем лексемы
 
+double expression() {
+    double left= expression();
+    Token t= get_token();
+    switch (t.kind) {
+    case '+':
+	return left + term();
+    case '-':
+	return left - term();
+    default:
+	return left;
+    }
+}
+
 int main() {
     // Token t;
     // t.kind= '+';
