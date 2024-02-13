@@ -33,16 +33,6 @@ double expression() {
 }
 
 int main() {
-    // Token t;
-    // t.kind= '+';
-    // Token t2;
-    // t2.kind= '8';
-    // t2.value= 3.14;
-
-    // Token tt= t;
-    // if (tt.kind != t.kind) error("невозможно!");
-    // t= t2;
-    // std::cout << t.value << std::endl;
 
     while (cin) {
 	Token t= get_token();
