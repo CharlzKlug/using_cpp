@@ -65,8 +65,9 @@ void Token_stream::putback(Token t)
 
 Token Token_stream::get()
 {
-    if(full) {       // do we already have a Token ready?
-        // remove token from buffer
+    if(full) {/* do we already have a Token ready?
+		 remove token from buffer
+	      */
         full = false;
         return buffer;
     }
@@ -117,6 +118,9 @@ double primary() {
     }
     case '8':            // we use '8' to represent a number
         return t.value;  // return the number's value
+    case 'q':
+	exit(0);
+	break;
     default:
         error("primary expected");
     }
@@ -165,7 +169,7 @@ double expression()
 	    t = ts.get();
 	    break;
 	case '-':
-	    left += term();    // evaluate Term and subtract
+	    left -= term();    // evaluate Term and subtract
 	    t = ts.get();
 	    break;
 	default:
@@ -183,7 +187,7 @@ int main() {
 	while (cin) {
 	    Token t = ts.get();
 	    
-	    if (t.kind == 'q') break; // 'q' for quit
+	    if (t.kind == 'q') {exit(0);} // 'q' for quit
 	    if (t.kind == ';')        // ';' for "print now"
 		cout << "=" << val << '\n';
 	    else
