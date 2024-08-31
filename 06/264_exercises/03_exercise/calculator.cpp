@@ -6,36 +6,26 @@
 
 /*
   This file is known as calculator02buggy.cpp
-  
   I have inserted 5 errors that should cause this not to compile
   I have inserted 3 logic errors that should cause the program to give wrong results
-  
+
   First try to find an remove the bugs without looking in the book.
   If that gets tedious, compare the code to that in the book (or posted source code)
-  
+
   Happy hunting!
-  
+
 */
 
 #include "std_lib_facilities.hpp"
+#include "auxiliary.hpp"
 #define EXIT_CHAR 'x'
-
-//------------------------------------------------------------------------------
-
-unsigned int factorial(unsigned int k) {
-    int result= 1;
-    for(unsigned int i= k; i > 1; i--) {
-	result *= i;
-    }
-    return result;
-}
 
 //------------------------------------------------------------------------------
 
 class Token{
 public:
     char kind;        // what kind of token
-    double value;     // for numbers: a value 
+    double value;     // for numbers: a value
     Token(char ch)    // make a Token from a char
 	:kind(ch), value(0) { }
     Token(char ch, double val)     // make a Token from a char and a double
@@ -82,10 +72,10 @@ Token Token_stream::get()
         full = false;
         return buffer;
     }
-    
+
     char ch;
     cin >> ch;    // note that >> skips whitespace (space, newline, tab, etc.)
-    
+
     switch (ch) {
     case '=':    // for "print"
     case EXIT_CHAR:    // for "quit"
@@ -108,7 +98,7 @@ Token Token_stream::get()
 
 //------------------------------------------------------------------------------
 
-Token_stream ts;        // provides get() and putback() 
+Token_stream ts;        // provides get() and putback()
 
 //------------------------------------------------------------------------------
 
@@ -184,7 +174,7 @@ double expression()
 {
     double left = term();      // read and evaluate a Term
     Token t = ts.get();        // get the next token from token stream
-    
+
     while (true) {
 	switch (t.kind) {
 	case '+':
@@ -201,7 +191,7 @@ double expression()
 	}
     }
 }
-	
+
 //------------------------------------------------------------------------------
 
 int main() {
@@ -214,9 +204,9 @@ int main() {
     try	{
 	while (cin) {
 	    Token t = ts.get();
-	    
-	    if (t.kind == EXIT_CHAR) {exit(0);} // 'q' for quit
-	    if (t.kind == '=')        // ';' for "print now"
+
+	    if (t.kind == EXIT_CHAR) {exit(0);} // 'x' for quit
+	    if (t.kind == '=')        // '=' for "print now"
 		cout << "=" << val << '\n';
 	    else
 		ts.putback(t);
